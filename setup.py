@@ -10,10 +10,9 @@ def read(fname):
 
 class ConfigureAndInstallShogun(_install):
     def build_directory(self):
-        if not os.path.exists("./build_test"):
-            print("Created directory")
-            os.makedirs("./build_test")
-        os.chdir("./build_test")   
+        if not os.path.exists("./build"):
+            os.makedirs("./build")
+        os.chdir("./build")   
     def cmake_build(self):
         if subprocess.call(["cmake", "..", "-DPythonModular=ON"]) != 0:
             raise EnvironmentError("error calling cmake")
@@ -25,8 +24,8 @@ class ConfigureAndInstallShogun(_install):
             raise EnvironmentError("error calling make")    
     def run(self):
         self.build_directory()
-        #self.cmake_build()
-        #self.make()
+        self.cmake_build()
+        self.make()
         _install.run(self)
        
 setup(
